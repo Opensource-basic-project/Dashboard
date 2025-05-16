@@ -1,6 +1,5 @@
-from fastapi import FastAPI #fastapi 기본 모듈 임포트 
-from bills import router as bills_router    #bills.py에서 만든 라우터를 bills_routuer로 가져옴
+from fastapi import FastAPI
+from plenary_bills_list import router as plenary_router
 
 app = FastAPI()
-
-app.include_router(bills_router)
+app.include_router(plenary_router)
