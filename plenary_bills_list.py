@@ -29,7 +29,7 @@ def fetch_plenary_bills(age: int, pIndex: int = 1, pSize: int = 100):
 # API 경로 /plenary 정의 
 @router.get("/plenary")
 # HTTP GET 요청이 /plenary 경로로 들어오면 이 함수를 실행함 
-def get_plenary_bills(request: Request, page: int = 1, size: int = 15):
+def get_plenary_bills(request: Request, page: int = 1, size: int = 15, query: str = ""):
     age = 22
     all_bills = []
 
@@ -53,6 +53,14 @@ def get_plenary_bills(request: Request, page: int = 1, size: int = 15):
         else:
             break
 
+    if query:
+        query_lower = query.lower()
+        all_bills = [
+            bill for bill in all_bills
+            if query_lower in (bill.get("BILL_NM") or "").lower()
+            or query_lower in (bill.get("PROPOSER") or "").lower()
+        ]
+
     # 최신 발의일 순 정렬 (내림차순)
     all_bills.sort(key=lambda x: x.get("PROPOSE_DT", ""), reverse=True)
 
@@ -66,5 +74,6 @@ def get_plenary_bills(request: Request, page: int = 1, size: int = 15):
         "bills": paginated_bills,
         "page": page,
         "size": size,
+        "query": query,
         "total_count": len(all_bills)
     })
