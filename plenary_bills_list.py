@@ -48,6 +48,8 @@ def get_plenary_bills(request: Request, page: int = 1, size: int = 15, query: st
                             "COMMITTEE_NM": bill.get("COMMITTEE_NM"),
                             "PROC_RESULT_CD": bill.get("PROC_RESULT_CD"),
                             "PROPOSER": bill.get("PROPOSER"),
+                            "BILL_ID": bill.get("BILL_ID"),
+                            "LINK_URL": bill.get("LINK_URL"), 
                         }
                         all_bills.append(simplified_bill)
         else:
