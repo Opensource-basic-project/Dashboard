@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>본회의 처리 법안 목록</title>
+    <style>
+        /* 공통 스타일 (두 페이지 동일) */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #4B65A2;
+            color: white;
+        }
+        tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+        caption {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #666;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a, .pagination span {
+            display: inline-block;
+            margin: 0 8px;
+            padding: 6px 12px;
+            color: #4B65A2;
+            text-decoration: none;
+            border: 1px solid #4B65A2;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #4B65A2;
+            color: white;
+        }
+        .pagination span {
+            background-color: #4B65A2;
+            color: white;
+            pointer-events: none;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1><a href="/plenary">본회의 처리 법안 목록</a></h1>
+    <form method="get" action="/plenary" style="text-align:center; margin-bottom: 20px;">
+        <input type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
+        <input type="hidden" name="page" value="1">
+        <input type="hidden" name="size" value="{{ size }}">
+        <button type="submit">검색</button>
+    </form>
+
+    <table>
+        <caption>총 {{ total_count }}개 법안 중 페이지 {{ page }} (페이지당 {{ size }}개)</caption>
+        <thead>
+            <tr>
+                <th>발의일</th>
+                <th>법안명</th>
+                <th>상임위</th>
+                <th>처리 결과</th>
+                <th>제안자</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if bills %}
+                {% for bill in bills %}
+                <tr>
+                    <td>{{ bill.PROPOSE_DT }}</td>  
+                    <td><a href="/plenary/{{ bill.BILL_ID }}">{{ bill.BILL_NM }}</a></td>
+                    <td>{{ bill.COMMITTEE_NM }}</td>
+                    <td>{{ bill.PROC_RESULT_CD }}</td>
+                    <td>{{ bill.PROPOSER }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" style="text-align:center;">데이터가 없습니다.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="/plenary?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
+        {% endif %}
+        <span>페이지 {{ page }}</span>
+        {% if (page * size) < total_count %}
+            <a href="/plenary?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
+        {% endif %}
+    </div>
+</body>
+</html>
