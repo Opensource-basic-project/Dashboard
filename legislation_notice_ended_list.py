@@ -7,7 +7,7 @@ templates = Jinja2Templates(directory="templates")
 
 API_KEY = "145bca1e52594533863a5b12ec70dbc9"
 
-def fetch_ongoing_notices(age: int, pIndex: int = 1, pSize: int = 100):
+def fetch_ended_notices(age: int, pIndex: int = 1, pSize: int = 100):
     url = "https://open.assembly.go.kr/portal/openapi/nohgwtzsamojdozky"
     params = {
         "KEY": API_KEY,
@@ -24,13 +24,13 @@ def fetch_ongoing_notices(age: int, pIndex: int = 1, pSize: int = 100):
         raise HTTPException(status_code=500, detail="입법예고 API 호출 실패")
 
 @router.get("/legislation_notice_ended")
-def legislation_notice_ongoing(request: Request, page: int = 1, size: int = 15, query: str = ""):
+def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, query: str = ""):
     age = 22
     all_notices = []
 
     for pIndex in range(1, 6):
-        data = fetch_ongoing_notices(age, pIndex=pIndex, pSize=100)
-        notices_data = data.get("nknalejkafmvgzmpt", [])
+        data = fetch_ended_notices(age, pIndex=pIndex, pSize=100)
+        notices_data = data.get("nohgwtzsamojdozky", [])
         
         if not notices_data:
             break
@@ -65,7 +65,7 @@ def legislation_notice_ongoing(request: Request, page: int = 1, size: int = 15, 
 
     return templates.TemplateResponse("legislation_notice_ended_list.html", {
         "request": request,
-        "ongoing_notices": paginated_notices,
+        "ended_notices": paginated_notices,
         "page": page,
         "size": size,
         "query": query,

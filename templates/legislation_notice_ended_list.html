@@ -68,8 +68,8 @@
     </style>
 </head>
 <body>
-    <h1><a href="/legislation_notice_ongoing">종료된 입법예고 목록</a></h1>
-    <form method="get" action="/legislation_notice_ongoing" style="text-align:center; margin-bottom: 20px;">
+    <h1><a href="/legislation_notice_ended">종료된 입법예고 목록</a></h1>
+    <form method="get" action="/legislation_notice_ended" style="text-align:center; margin-bottom: 20px;">
         <input type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
         <input type="hidden" name="page" value="1">
         <input type="hidden" name="size" value="{{ size }}">
@@ -87,8 +87,8 @@
             </tr>
         </thead>
         <tbody>
-            {% if ongoing_notices %}
-                {% for notice in ongoing_notices %}
+            {% if ended_notices %}
+                {% for notice in ended_notices %}
                 <tr>
                     <td>{{ notice.NOTI_ED_DT }}</td>
                     <td>{{ notice.BILL_NAME }}</td>
@@ -106,11 +106,11 @@
 
     <div class="pagination">
         {% if page > 1 %}
-            <a href="/legislation_notice_ongoing?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
+            <a href="/legislation_notice_ended?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
         {% endif %}
         <span>페이지 {{ page }}</span>
         {% if (page * size) < total_count %}
-            <a href="/legislation_notice_ongoing?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
+            <a href="/legislation_notice_ended?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
         {% endif %}
     </div>
 </body>
