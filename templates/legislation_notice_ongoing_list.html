@@ -91,7 +91,7 @@
                 {% for notice in ongoing_notices %}
                 <tr>
                     <td>{{ notice.NOTI_ED_DT }}</td>
-                    <td>{{ notice.BILL_NAME }}</td>
+                    <td><a href="/legislation_ongoing/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></td>
                     <td>{{ notice.CURR_COMMITTEE }}</td>
                     <td>{{ notice.PROPOSER }}</td>
                 </tr>
