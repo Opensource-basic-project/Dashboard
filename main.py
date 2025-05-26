@@ -9,7 +9,7 @@ from legislation_notice_ongoing_detail import router as notice_detail_router
 from legislation_notice_ended_detail import router as notice_detail_ended_router
 
 #static
-from fastapi.staticfiles import StaticFiles
+#from fastapi.staticfiles import StaticFiles
 
 #DB
 from db import init_db
@@ -25,7 +25,7 @@ app.include_router(notice_list_ended_router)
 app.include_router(notice_detail_router)
 app.include_router(notice_detail_ended_router)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 #가상환경 활성화 : .\venv\Scripts\Activate.ps1
 #서버 실행 : uvicorn main:app --reload
