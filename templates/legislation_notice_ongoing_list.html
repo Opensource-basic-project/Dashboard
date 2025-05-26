@@ -1,3 +1,90 @@
+<!--<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>진행 중 입법예고 목록</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+      /* 피그마 기본 리셋 스타일 일부 예시 */
+      a, button, input, select, h1, h2, h3, h4, h5, * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          border: none;
+          text-decoration: none;
+          background: none;
+          -webkit-font-smoothing: antialiased;
+      }
+      menu, ol, ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+      }
+      /* 추가 필요 시 적절히 작성 */
+    </style>
+</head>
+<body>
+  <div class="div">
+    <div class="div2">
+      <div class="div3">
+        <div class="div4">
+          <div class="boardname">입법예고</div>
+          <div class="div5">
+            <div class="item-1"><div class="div6"><a href="/dashboard">메인 대시보드</a></div></div>
+            <div class="item-2"><div class="div7"><a href="/legislation_meeting">본회의 법안정보</a></div></div>
+            <div class="item-4 active"><div class="div8">입법예고</div></div>
+            <div class="item-5"><div class="div9"><a href="/foreign_legislation">국외 입법정보</a></div></div>
+            <div class="item-6"><div class="div10"><a href="/public_opinion">법안 여론분석</a></div></div>
+          </div>
+          <div class="div11">
+            <form method="get" action="/legislation_notice_ongoing" style="display:flex; align-items:center;">
+              <input class="search-input" type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
+              <input type="hidden" name="page" value="1">
+              <input type="hidden" name="size" value="{{ size }}">
+              <button type="submit" class="search-button">검색</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div14">
+      <div class="div15">제안일자</div>
+      <div class="div16">상임위원회</div>
+      <div class="div17">의결현황</div>
+      <div class="div18">제안자</div>
+      <div class="div19">의안명</div>
+    </div>
+
+    <div class="div20">
+      {% if ongoing_notices %}
+        {% for notice in ongoing_notices %}
+          <div class="div21">
+            <div class="div_date">{{ notice.NOTI_ED_DT }}</div>
+            <div class="div_committee">{{ notice.CURR_COMMITTEE }}</div>
+            <div class="div_status">{{ notice.STATUS or '진행 중' }}</div>
+            <div class="div_proposer">{{ notice.PROPOSER }}</div>
+            <div class="div_billname"><a href="/legislation_ongoing/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div style="text-align:center; padding: 20px;">데이터가 없습니다.</div>
+      {% endif %}
+    </div>
+
+    <div class="pagination">
+      {% if page > 1 %}
+        <a href="/legislation_notice_ongoing?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
+      {% endif %}
+      <span>페이지 {{ page }}</span>
+      {% if (page * size) < total_count %}
+        <a href="/legislation_notice_ongoing?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
+-->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,9 +117,6 @@
         th {
             background-color: #4B65A2;
             color: white;
-        }
-        tr:nth-child(even){
-            background-color: #f2f2f2;
         }
         caption {
             margin: 15px 0;
