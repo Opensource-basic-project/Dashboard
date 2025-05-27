@@ -1,73 +1,53 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.templating import Jinja2Templates
-import requests
+from sqlalchemy.orm import Session
+from db import SessionLocal, EndedLegislationNotice  # 종료 테이블 import
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-API_KEY = "145bca1e52594533863a5b12ec70dbc9"
-
-def fetch_ended_notices(age: int, pIndex: int = 1, pSize: int = 100):
-    url = "https://open.assembly.go.kr/portal/openapi/nohgwtzsamojdozky"
-    params = {
-        "KEY": API_KEY,
-        "Type": "json",
-        "AGE": age,
-        "pIndex": pIndex,
-        "pSize": pSize
-    }
+def get_db():
+    db = SessionLocal()
     try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException:
-        raise HTTPException(status_code=500, detail="입법예고 API 호출 실패")
+        yield db
+    finally:
+        db.close()
 
 @router.get("/legislation_notice_ended")
-def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, query: str = ""):
-    age = 22
-    all_notices = []
-
-    for pIndex in range(1, 6):
-        data = fetch_ended_notices(age, pIndex=pIndex, pSize=100)
-        notices_data = data.get("nohgwtzsamojdozky", [])
-        
-        if not notices_data:
-            break
-
-        for item in notices_data:
-            rows = item.get("row", [])
-            if not rows:
-                continue
-            for notice in rows:
-                all_notices.append({
-                    "BILL_NAME": notice.get("BILL_NAME"),
-                    "PROPOSER": notice.get("PROPOSER"),
-                    "BILL_ID": notice.get("BILL_ID"),
-                    "NOTI_ED_DT": notice.get("NOTI_ED_DT"),
-                    "LINK_URL": notice.get("LINK_URL"),
-                    "CURR_COMMITTEE": notice.get("CURR_COMMITTEE"),
-                })
-
-
-
+def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, query: str = "", db: Session = Depends(get_db)):
+    # DB에서 쿼리 및 페이징 처리
+    query_obj = db.query(EndedLegislationNotice)
     if query:
-        query_lower = query.lower()
-        all_notices = [
-            notice for notice in all_notices
-            if query_lower in (notice.get("BILL_NAME") or "").lower()
-            or query_lower in (notice.get("PROPOSER") or "").lower()
-        ]
+        query_filter = f"%{query}%"
+        query_obj = query_obj.filter(
+            (EndedLegislationNotice.bill_name.ilike(query_filter)) |
+            (EndedLegislationNotice.proposer.ilike(query_filter))
+        )
 
-    all_notices.sort(key=lambda x: x.get("ANNOUNCE_DT", ""), reverse=True)
-    start_idx = (page - 1) * size
-    paginated_notices = all_notices[start_idx:start_idx + size]
+    total_count = query_obj.count()
+
+    notices = query_obj.order_by(EndedLegislationNotice.announce_dt.desc()) \
+                       .offset((page - 1) * size) \
+                       .limit(size) \
+                       .all()
+
+    notices_list = []
+    for n in notices:
+        notices_list.append({
+            "BILL_NAME": n.bill_name,
+            "PROPOSER": n.proposer,
+            "BILL_ID": n.bill_id,
+            "NOTI_ED_DT": n.noti_ed_dt,
+            "LINK_URL": n.link_url,
+            "CURR_COMMITTEE": n.curr_committee,
+            "ANNOUNCE_DT": n.announce_dt,
+        })
 
     return templates.TemplateResponse("legislation_notice_ended_list.html", {
         "request": request,
-        "ended_notices": paginated_notices,
+        "ended_notices": notices_list,
         "page": page,
         "size": size,
         "query": query,
-        "total_count": len(all_notices)
+        "total_count": total_count,
     })

@@ -20,5 +20,17 @@ class LegislationNotice(Base):  #진행중 입법예고
     curr_committee = Column(String)
     announce_dt = Column(String)
 
+class EndedLegislationNotice(Base):  # 종료된 입법예고
+    __tablename__ = "ended_legislation_notices"
+
+    id = Column(Integer, primary_key=True, index=True)
+    bill_name = Column(String)
+    proposer = Column(String)
+    bill_id = Column(String, index=True)
+    noti_ed_dt = Column(String)
+    link_url = Column(String)
+    curr_committee = Column(String)
+    announce_dt = Column(String)
+
 def init_db():
     Base.metadata.create_all(bind=engine)
