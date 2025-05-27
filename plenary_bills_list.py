@@ -1,73 +1,59 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
-import requests
+from sqlalchemy.orm import Session
+from db import SessionLocal, PlenaryBill  # PlenaryBill 테이블 import
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-API_KEY = "145bca1e52594533863a5b12ec70dbc9"
-
-def fetch_plenary_bills(age: int, pIndex: int = 1, pSize: int = 100):
-    url = "https://open.assembly.go.kr/portal/openapi/nwbpacrgavhjryiph"
-    params = {
-        "KEY": API_KEY,
-        "Type": "json",
-        "AGE": age,
-        "pIndex": pIndex,
-        "pSize": pSize
-    }
+def get_db():
+    db = SessionLocal()
     try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException:
-        raise HTTPException(status_code=500, detail="국회 본회의 API 호출 실패")
+        yield db
+    finally:
+        db.close()
 
 @router.get("/plenary")
-def get_plenary_bills(request: Request, page: int = 1, size: int = 15, query: str = ""):
-    age = 22
-    all_bills = []
-
-    for pIndex in range(1, 6):
-        data = fetch_plenary_bills(age, pIndex=pIndex, pSize=100)
-        bills_data = data.get("nwbpacrgavhjryiph", [])
-        
-        if not bills_data:
-            break
-
-        for item in bills_data:
-            rows = item.get("row", [])
-            if not rows:
-                continue
-            for bill in rows:
-                all_bills.append({
-                    "PROPOSE_DT": bill.get("PROPOSE_DT"),
-                    "BILL_NM": bill.get("BILL_NM"),
-                    "COMMITTEE_NM": bill.get("COMMITTEE_NM"),
-                    "PROC_RESULT_CD": bill.get("PROC_RESULT_CD"),
-                    "PROPOSER": bill.get("PROPOSER"),
-                    "BILL_ID": bill.get("BILL_ID"),
-                    "LINK_URL": bill.get("LINK_URL")
-                })
-
+def get_plenary_bills(
+    request: Request,
+    page: int = 1,
+    size: int = 15,
+    query: str = "",
+    db: Session = Depends(get_db)
+):
+    query_obj = db.query(PlenaryBill)
 
     if query:
-        query_lower = query.lower()
-        all_bills = [
-            bill for bill in all_bills
-            if query_lower in (bill.get("BILL_NM") or "").lower()
-            or query_lower in (bill.get("PROPOSER") or "").lower()
-        ]
+        query_filter = f"%{query}%"
+        query_obj = query_obj.filter(
+            (PlenaryBill.bill_name.ilike(query_filter)) |
+            (PlenaryBill.proposer.ilike(query_filter))
+        )
 
-    all_bills.sort(key=lambda x: x.get("PROPOSE_DT", ""), reverse=True)
-    start_idx = (page - 1) * size
-    paginated_bills = all_bills[start_idx:start_idx + size]
+    total_count = query_obj.count()
+
+    bills = query_obj.order_by(PlenaryBill.id.desc()) \
+                     .offset((page - 1) * size) \
+                     .limit(size) \
+                     .all()
+
+    bill_list = []
+    for bill in bills:
+        bill_list.append({
+            "BILL_ID": bill.bill_id,
+            "BILL_NM": bill.bill_name,
+            "PROPOSER": bill.proposer,
+            "PROC_RESULT_CD": bill.proc_result_cd,
+            "COMMITTEE_NM": bill.committee_nm,
+            "PROPOSE_DT": bill.propose_dt,
+            "LINK_URL": bill.link_url
+        })
 
     return templates.TemplateResponse("plenary_bills_list.html", {
         "request": request,
-        "bills": paginated_bills,
+        "bills": bill_list,
         "page": page,
         "size": size,
         "query": query,
-        "total_count": len(all_bills)
+        "total_count": total_count
     })

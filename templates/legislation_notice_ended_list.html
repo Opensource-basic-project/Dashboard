@@ -31,9 +31,6 @@
             background-color: #4B65A2;
             color: white;
         }
-        tr:nth-child(even){
-            background-color: #f2f2f2;
-        }
         caption {
             margin: 15px 0;
             font-size: 1.1em;
@@ -91,7 +88,7 @@
                 {% for notice in ended_notices %}
                 <tr>
                     <td>{{ notice.NOTI_ED_DT }}</td>
-                    <td>{{ notice.BILL_NAME }}</td>
+                    <td><a href="/legislation_ended/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></td>
                     <td>{{ notice.CURR_COMMITTEE }}</td>
                     <td>{{ notice.PROPOSER }}</td>
                 </tr>
