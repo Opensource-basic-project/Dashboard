@@ -291,13 +291,19 @@
   font-weight: 600;
 }
 .div12{
-    width : 80%;
+    width : 70%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto; 
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 .div13{
   text-align: left;
+  font-size: 20px;
 }
 form{
-  text-align:right; margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 table {
     border-collapse: collapse;
@@ -342,6 +348,64 @@ a {
     color: inherit;
     text-decoration: none;
 }
+.filter-select {
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  width: 150px;
+}
+.search-input{
+  border: 1px solid #474747;
+  border-radius: 8px;
+  width: 250px;
+  height: 25px;
+  padding-left: 8px;
+}
+.search-button {
+  width: 25px;
+  height: 25px;
+  background-image: url("/static/svg/div63.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #b4b4b4;
+  cursor: pointer;
+  position: relative;
+  top: 6px;
+}
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.page-arrow,
+.page-number {
+  margin: 0 5px;
+  padding: 6px 10px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+}
+
+.page-number.active {
+  font-weight: bold;
+  background-color: #eee;
+}
+
+.page-arrow.disabled {  
+  cursor: default;
+  pointer-events: none;  /* 클릭 불가 처리 */
+}
+
+
+
+
 
 
 
