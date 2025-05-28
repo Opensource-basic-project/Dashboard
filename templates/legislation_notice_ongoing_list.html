@@ -1,9 +1,9 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
     <title>진행 중 입법예고 목록</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/legislation_notice_ongoing_style.css" />
     <style>
       /* 피그마 기본 리셋 스타일 일부 예시 */
       a, button, input, select, h1, h2, h3, h4, h5, * {
@@ -47,121 +47,25 @@
         </div>
       </div>
     </div>
-
-    <div class="div14">
-      <div class="div15">제안일자</div>
-      <div class="div16">상임위원회</div>
-      <div class="div17">의결현황</div>
-      <div class="div18">제안자</div>
-      <div class="div19">의안명</div>
+    <div class="container">
+      <div class="rectangle-1244"></div>
+      <div class="div47">진행 중 입법예고<br /></div>
     </div>
-
-    <div class="div20">
-      {% if ongoing_notices %}
-        {% for notice in ongoing_notices %}
-          <div class="div21">
-            <div class="div_date">{{ notice.NOTI_ED_DT }}</div>
-            <div class="div_committee">{{ notice.CURR_COMMITTEE }}</div>
-            <div class="div_status">{{ notice.STATUS or '진행 중' }}</div>
-            <div class="div_proposer">{{ notice.PROPOSER }}</div>
-            <div class="div_billname"><a href="/legislation_ongoing/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <div style="text-align:center; padding: 20px;">데이터가 없습니다.</div>
-      {% endif %}
-    </div>
-
-    <div class="pagination">
-      {% if page > 1 %}
-        <a href="/legislation_notice_ongoing?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
-      {% endif %}
-      <span>페이지 {{ page }}</span>
-      {% if (page * size) < total_count %}
-        <a href="/legislation_notice_ongoing?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
-      {% endif %}
-    </div>
-  </div>
-</body>
-</html>
--->
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8" />
-    <title>진행 중 입법예고 목록</title>
-    <style>
-        /* 위와 동일한 스타일 */
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #4B65A2;
-            color: white;
-        }
-        caption {
-            margin: 15px 0;
-            font-size: 1.1em;
-            color: #666;
-        }
-        .pagination {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .pagination a, .pagination span {
-            display: inline-block;
-            margin: 0 8px;
-            padding: 6px 12px;
-            color: #4B65A2;
-            text-decoration: none;
-            border: 1px solid #4B65A2;
-            border-radius: 4px;
-        }
-        .pagination a:hover {
-            background-color: #4B65A2;
-            color: white;
-        }
-        .pagination span {
-            background-color: #4B65A2;
-            color: white;
-            pointer-events: none;
-        }
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <h1><a href="/legislation_notice_ongoing">진행 중 입법예고 목록</a></h1>
-    <form method="get" action="/legislation_notice_ongoing" style="text-align:center; margin-bottom: 20px;">
-        <input type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
-        <input type="hidden" name="page" value="1">
-        <input type="hidden" name="size" value="{{ size }}">
-        <button type="submit">검색</button>
-    </form>
-
+    <div class="line-13"></div>
+    
+    <div class="div12">
+      <div class="div13">
+        전체 {{ total_count }}건 ({{ page }} / {{total_count//15}}페이지)
+      <div>
+      <form method="get" action="/legislation_notice_ongoing">
+            <input type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
+            <input type="hidden" name="page" value="1">
+            <input type="hidden" name="size" value="{{ size }}">
+            <button type="submit">검색</button>
+      </form>
+    <div>
+      
     <table>
-        <caption>총 {{ total_count }}개 입법예고 중 페이지 {{ page }} (페이지당 {{ size }}개)</caption>
         <thead>
             <tr>
                 <th>마감일</th>
@@ -190,11 +94,11 @@
 
     <div class="pagination">
         {% if page > 1 %}
-            <a href="/legislation_notice_ongoing?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
+            <a href="/legislation_notice_ended?page={{ page - 1 }}&size={{ size }}&query={{ query }}">이전</a>
         {% endif %}
         <span>페이지 {{ page }}</span>
         {% if (page * size) < total_count %}
-            <a href="/legislation_notice_ongoing?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
+            <a href="/legislation_notice_ended?page={{ page + 1 }}&size={{ size }}&query={{ query }}">다음</a>
         {% endif %}
     </div>
 </body>
