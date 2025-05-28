@@ -259,18 +259,18 @@
 }
 .container {
   margin-top: 80px;
-  margin-left:40px;
-  margin-right:40px;
+  margin-left:90px;
+  margin-right:90px;
   display: flex;
   align-items: center; /* 수직 중앙 정렬 */
   gap: 10px; /* 사각형과 텍스트 사이 간격 */  
 }
 
 .line-13 {
-  max-width: calc(100% - 80px);
+  max-width: calc(100% - 70px);
   margin-top: 20px;
-  margin-left:40px;
-  margin-right:40px;
+  margin-left:90px;
+  margin-right:90px;
   border-style: solid;
   border-color: #e0e0e0;
   border-width: 4px 0 0 0;
@@ -301,7 +301,7 @@ form{
 }
 table {
     border-collapse: collapse;
-    width : 80%;
+    width : 70%;
     margin: 0 auto;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
