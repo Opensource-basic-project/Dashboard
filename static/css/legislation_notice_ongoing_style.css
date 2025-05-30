@@ -1,3 +1,10 @@
+body{
+  padding-bottom: 200px;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
 .div,
 .div * {
   box-sizing: border-box;
@@ -36,11 +43,12 @@
   justify-content: flex-start;
   align-self: stretch;
   flex-shrink: 0;
-  height: 70px;
+  height: 85px;
   position: relative;
 }
 .boardname {
   color: #ffffff;
+  font-weight: bold;
   text-align: left;
   font-family: "NicoMoji-Regular", sans-serif;
   font-size: 43px;
@@ -51,7 +59,7 @@
   position: relative;
   width: auto;
   height: 68px;
-  margin-left:50px;
+  margin-left:100px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -62,13 +70,14 @@
   padding: 4px 4px 4px 17px;
   display: flex;
   flex-direction: row;
-  gap: 9px;
+  gap: 10px;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   flex-shrink: 0;
-  width: 60%;
+  width: 55%;
   height: 42px;
   position: relative;
+  margin: 0 auto;
 }
 .div6 {
   color: #000000;
@@ -226,7 +235,7 @@
   font-weight: 600;
 }
 .div12{
-    width : 70%;
+    width : 79%;
     display: flex;
     justify-content: space-between;
     margin: 0 auto; 
@@ -239,67 +248,6 @@
 }
 form{
    margin-bottom: 5px;
-}
-table {
-    border-collapse: separate;
-    border-spacing: 0px 8px;
-    width : 100%;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    background-color: #fff;
-    background-color: transparent; 
-}
-th, td {
-    border: 2px solid #ccc;
-    padding: 12px 15px;
-    text-align: left;
-    background-color: #fff; 
-    border-left: none;
-    border-right: none;
-}
-th {
-    background-color: #4B65A2;
-    color: white;
-}
-th:first-child,
-td:first-child {
-    border-left: 1px solid #ccc;
-    border-radius: 10px 0 0 10px;
-}
-
-/* 마지막 셀: 오른쪽 선 보이게 */
-th:last-child,
-td:last-child {
-    border-right: 1px solid #ccc;
-    border-radius: 0 10px 10px 0;
-}
-
-.pagination {
-    margin-top: 20px;
-    text-align: center;
-    margin: 0 auto;
-}
-.pagination a, .pagination span {
-    display: inline-block;
-    margin: 0 8px;
-    padding: 6px 12px;
-    color: #4B65A2;
-    text-decoration: none;
-    border: 1px solid #4B65A2;
-    border-radius: 4px;
-}
-.pagination a:hover {
-    background-color: #4B65A2;
-    color: white;
-}
-.pagination span {
-    background-color: #4B65A2;
-    color: white;
-    pointer-events: none;
-}
-a {
-    color: inherit;
-    text-decoration: none;
 }
 .filter-select {
   padding: 3px;
@@ -331,30 +279,116 @@ a {
   position: relative;
   top: 6px;
 }
-.pagination {
-  text-align: center;
-  margin-top: 20px;
+table {
+    border-collapse: separate;
+    border-spacing: 0px 8px;
+    width : 100%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: #fff;
+    background-color: transparent; 
+}
+th, td {
+    border: 2px solid #ccc;
+    padding: 8px 15px;
+    text-align: left;
+    background-color: #fff; 
+    border-left: none;
+    border-right: none;
+}
+th {
+    background-color: #4B65A2;
+    color: white;
+}
+th:first-child,
+td:first-child {
+    border-left: 1px solid #ccc;
+    border-radius: 10px 0 0 10px;
 }
 
-.page-arrow,
-.page-number {
-  margin: 0 5px;
-  padding: 6px 10px;
-  text-decoration: none;
+/* 마지막 셀: 오른쪽 선 보이게 */
+th:last-child,
+td:last-child {
+    border-right: 1px solid #ccc;
+    border-radius: 0 10px 10px 0;
+}
+
+
+
+/*페이지네이션*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;              /* 혹시 너무 많아도 줄바꿈 대응 */
+  gap: 6px;                     /* 요소 간 여백 */
+  margin: 20px auto 0 auto;
+}
+
+.page-number,
+.page-arrow {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #ccc;
   border-radius: 4px;
   color: black;
-}
-
-.page-number.active {
   font-weight: bold;
-  background-color: #eee;
+  font-size: 15px;
+  background-color: transparent;  /* 기존 white에서 transparent로 변경 */
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
-.page-arrow.disabled {  
-  cursor: default;
-  pointer-events: none;  /* 클릭 불가 처리 */
+/* 현재 페이지 스타일 */
+.page-number{
+  background-color: white;
+  color: #4B65A2;
 }
+.page-number.active {
+  background-color: #4B65A2;
+  color: white;
+}
+
+/* 비활성 화살표 */
+.page-arrow.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
+/* 화살표 아이콘 */
+.page-arrow.first {
+  background: url('/static/svg/frame-1270.svg') no-repeat center;
+  background-size: 20px 20px;
+  border: none;
+}
+
+.page-arrow.prev {
+  background: url('/static/svg/vector13.svg') no-repeat center;
+  background-size: 20px 20px;
+  border: none;
+}
+
+.page-arrow.next {
+  background: url('/static/svg/frame-1260.svg') no-repeat center;
+  background-size: 20px 20px;
+  border: none;
+}
+
+.page-arrow.last {
+  background: url('/static/svg/frame-1280.svg') no-repeat center;
+  background-size: 20px 20px;
+  border: none;
+}
+
+.page-arrow::before {
+  content: "";
+}
+
 
 .card {
   background: #f2f4f6;

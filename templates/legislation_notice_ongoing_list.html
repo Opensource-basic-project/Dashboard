@@ -28,7 +28,7 @@
     <div class="div2">
       <div class="div3">
         <div class="div4">
-          <div class="boardname">입법예고</div>
+          <div class="boardname">DASHBOARD</div>
           <div class="div5">
             <div class="item-1"><div class="div6"><a href="/dashboard">메인 대시보드</a></div></div>
             <div class="item-2"><div class="div7"><a href="/legislation_meeting">본회의 법안정보</a></div></div>
@@ -57,7 +57,7 @@
     
     <div class="div12">
       <div class="div13">
-        전체 <strong>{{ total_count }}</strong>건 ({{ page }} / {{ (total_count // 15)|round(0, 'ceil')|int }} 페이지)
+        총 <strong>{{ total_count }}건</strong> ({{ page }} / {{ (total_count / size)|round(0, 'ceil')|int }} 페이지)
       </div>
       <form method="get" action="/legislation_notice_ongoing" class="search-form">
         <input class="search-input" type="text" name="query" placeholder="법안명 또는 제안자 검색" value="{{ query }}">
@@ -83,57 +83,73 @@
     </div>
 
     <div class="card">
-    <table>
-        <thead>
-            <tr>
-                <th>마감일</th>
-                <th>법안명</th>
-                <th>소관위원회</th>
-                <th>제안자</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if ongoing_notices %}
-                {% for notice in ongoing_notices %}
-                <tr>
-                    <td>{{ notice.NOTI_ED_DT }}</td>
-                    <td><a href="/legislation_ongoing/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></td>
-                    <td>{{ notice.CURR_COMMITTEE }}</td>
-                    <td>{{ notice.PROPOSER }}</td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="5" style="text-align:center;">데이터가 없습니다.</td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
+      <table>
+          <thead>
+              <tr>
+                  <th>마감일</th>
+                  <th>법안명</th>
+                  <th>소관위원회</th>
+                  <th>제안자</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% if ongoing_notices %}
+                  {% for notice in ongoing_notices %}
+                  <tr>
+                      <td>{{ notice.NOTI_ED_DT }}</td>
+                      <td><a href="/legislation_ongoing/{{ notice.BILL_ID }}">{{ notice.BILL_NAME }}</a></td>
+                      <td>{{ notice.CURR_COMMITTEE }}</td>
+                      <td>{{ notice.PROPOSER }}</td>
+                  </tr>
+                  {% endfor %}
+              {% else %}
+                  <tr>
+                      <td colspan="5" style="text-align:center;">데이터가 없습니다.</td>
+                  </tr>
+              {% endif %}
+          </tbody>
+      </table>
 
-    <div class="pagination">
-      {# ← 이전 버튼 #}
-      {% if page > 1 %}
-        <a class="page-arrow" href="?page={{ page - 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}">←</a>
-      {% else %}
-        <span class="page-arrow disabled">←</span>
-      {% endif %}
-
-      {# 페이지 번호 리스트 #}
-      {% for p in range(start_page, end_page + 1) %}
-        {% if p == page %}
-          <span class="page-number active">{{ p }}</span>
+      <div class="pagination">
+        {# 처음 페이지 버튼 #}
+        {% if page > 1 %}
+          <a class="page-arrow first" href="?page=1&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
         {% else %}
-          <a class="page-number" href="?page={{ p }}&size={{ size }}&query={{ query }}&committee={{ committee }}">{{ p }}</a>
+          <span class="page-arrow first disabled"></span>
         {% endif %}
-      {% endfor %}
 
-      {# → 다음 버튼 #}
-      {% if page < total_pages %}
-        <a class="page-arrow" href="?page={{ page + 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}">→</a>
-      {% else %}
-        <span class="page-arrow disabled">→</span>
-      {% endif %}
-    </div>
+        {# 이전 페이지 버튼 #}
+        {% if page > 1 %}
+          <a class="page-arrow prev" href="?page={{ page - 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
+        {% else %}
+          <span class="page-arrow prev disabled"></span>
+        {% endif %}
+
+        {# 페이지 숫자 리스트 #}
+        {% for p in range(start_page, end_page + 1) %}
+          {% if p == page %}
+            <span class="page-number active">{{ p }}</span>
+          {% else %}
+            <a class="page-number" href="?page={{ p }}&size={{ size }}&query={{ query }}&committee={{ committee }}">{{ p }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {# 다음 페이지 버튼 #}
+        {% if page < total_pages %}
+          <a class="page-arrow next" href="?page={{ page + 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
+        {% else %}
+          <span class="page-arrow next disabled"></span>
+        {% endif %}
+
+        {# 끝 페이지 버튼 #}
+        {% if page < total_pages %}
+          <a class="page-arrow last" href="?page={{ total_pages }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
+        {% else %}
+          <span class="page-arrow last disabled"></span>
+        {% endif %}
+      </div>
+
+
     </div>
 
 </body>
