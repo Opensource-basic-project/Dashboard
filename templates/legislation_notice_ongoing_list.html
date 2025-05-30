@@ -36,6 +36,7 @@
             <div class="item-5"><div class="div9"><a href="/foreign_legislation">국외 입법정보</a></div></div>
             <div class="item-6"><div class="div10"><a href="/public_opinion">법안 여론분석</a></div></div>
           </div>
+          <!--
           <div class="div11">
             <form method="get" action="/legislation_notice_ongoing" style="display:flex; align-items:center;">
               <input class="search-input" type="text" name="query" placeholder="검색어를 입력하세요" value="{{ query }}">
@@ -44,6 +45,7 @@
               <button type="submit" class="search-button">검색</button>
             </form>
           </div>
+          -->
         </div>
       </div>
     </div>
@@ -61,7 +63,7 @@
         <input class="search-input" type="text" name="query" placeholder="법안명 또는 제안자 검색" value="{{ query }}">
 
         <select name="committee" class="filter-select">
-          <option value="">상임위원회</option>
+          <option value="">전체</option>
           {% set committees = [
               '국회운영위원회', '법제사법위원회', '정무위원회', '기획재정위원회', '교육위원회',
               '과학기술정보방송통신위원회', '외교통일위원회', '국방위원회', '행정안전위원회', '문화체육관광위원회',
@@ -80,6 +82,7 @@
 
     </div>
 
+    <div class="card">
     <table>
         <thead>
             <tr>
@@ -130,6 +133,7 @@
       {% else %}
         <span class="page-arrow disabled">→</span>
       {% endif %}
+    </div>
     </div>
 
 </body>

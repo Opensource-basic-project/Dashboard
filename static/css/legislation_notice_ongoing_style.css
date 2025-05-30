@@ -6,7 +6,7 @@
   background: #ffffff;
   height: 1261px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 .div2 {
   display: flex;
@@ -28,7 +28,7 @@
 }
 .div4 {
   background: #364a79;
-  padding: 10px 116px 10px 116px;
+  padding: 10px 60px 10px 6px;
   display: flex;
   flex-direction: row;
   gap: 36px;
@@ -36,7 +36,7 @@
   justify-content: flex-start;
   align-self: stretch;
   flex-shrink: 0;
-  height: 92px;
+  height: 70px;
   position: relative;
 }
 .boardname {
@@ -49,8 +49,9 @@
   font-weight: 400;
   text-transform: uppercase;
   position: relative;
-  width: 299.63px;
+  width: auto;
   height: 68px;
+  margin-left:50px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -65,29 +66,9 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 708.12px;
+  width: 60%;
   height: 42px;
   position: relative;
-}
-.item-1 {
-  border-radius: 10px;
-  padding: 0px 7px 0px 0px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 153px;
-  height: 31px;
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  box-shadow: var(
-    --button-shadow-box-shadow,
-    0px 1px 2px 0px rgba(0, 0, 0, 0.05)
-  );
-  overflow: hidden;
 }
 .div6 {
   color: #000000;
@@ -97,27 +78,11 @@
   line-height: 150%;
   font-weight: 700;
   position: relative;
-  width: 153px;
+  width: auto;
   height: 21px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.item-2 {
-  border-radius: 10px;
-  padding: 0px 12px 0px 14px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 148px;
-  height: 31px;
-  position: absolute;
-  left: 167px;
-  top: 5px;
-  overflow: hidden;
 }
 .div7 {
   color: #000000;
@@ -127,28 +92,11 @@
   line-height: 150%;
   font-weight: 700;
   position: relative;
-  width: 162px;
+  width: auto;
   height: 31px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.item-4 {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 0px 12px 0px 18px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 105px;
-  height: 31px;
-  position: absolute;
-  left: 323.56px;
-  top: 5px;
-  overflow: hidden;
 }
 .div8 {
   color: var(--text-primary, #000000);
@@ -161,22 +109,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.item-5 {
-  border-radius: 4px;
-  padding: 0px 12px 0px 16px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 169px;
-  height: 31px;
-  position: absolute;
-  left: 425.37px;
-  top: 5px;
-  overflow: hidden;
+  width: auto;
 }
 .div9 {
   color: var(--text-primary, #000000);
@@ -186,26 +119,10 @@
   line-height: 150%;
   font-weight: 700;
   position: relative;
-  width: 147px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.item-6 {
-  border-radius: 4px;
-  padding: 0px 18px 0px 18px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 203px;
-  height: 31px;
-  position: absolute;
-  left: 562.37px;
-  top: 5px;
-  overflow: hidden;
+  width: auto;
 }
 .div10 {
   color: var(--text-primary, #000000);
@@ -215,10 +132,28 @@
   line-height: 150%;
   font-weight: 700;
   position: relative;
-  width: 167px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+.item-1, .item-2, .item-4, .item-5, .item-6 {
+  border-radius: 10px;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 31px;
+  overflow: hidden;
+  flex-grow: 1;      /* 비율만큼 늘어남 */
+  flex-basis: 0;     /* 기본 크기를 0으로 설정 */
+  min-width: 0;      /* 내용이 넘쳐도 줄어들 수 있게 함 */
+  background: #e6e7ea;
+}
+.item-4{
+  padding: 5px;
+  background: #f3f2f2;
 }
 .div11 {
   background: #e6e7ea;
@@ -306,25 +241,43 @@ form{
    margin-bottom: 5px;
 }
 table {
-    border-collapse: collapse;
-    width : 70%;
+    border-collapse: separate;
+    border-spacing: 0px 8px;
+    width : 100%;
     margin: 0 auto;
+    margin-bottom: 10px;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: transparent; 
 }
 th, td {
-    border: 1px solid #ddd;
+    border: 2px solid #ccc;
     padding: 12px 15px;
     text-align: left;
+    background-color: #fff; 
+    border-left: none;
+    border-right: none;
 }
 th {
     background-color: #4B65A2;
     color: white;
 }
+th:first-child,
+td:first-child {
+    border-left: 1px solid #ccc;
+    border-radius: 10px 0 0 10px;
+}
+
+/* 마지막 셀: 오른쪽 선 보이게 */
+th:last-child,
+td:last-child {
+    border-right: 1px solid #ccc;
+    border-radius: 0 10px 10px 0;
+}
 
 .pagination {
     margin-top: 20px;
     text-align: center;
+    margin: 0 auto;
 }
 .pagination a, .pagination span {
     display: inline-block;
@@ -403,6 +356,25 @@ a {
   pointer-events: none;  /* 클릭 불가 처리 */
 }
 
+.card {
+  background: #f2f4f6;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #e0e0e0;
+  border-width: 3px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
+  overflow: visible;
+  border-collapse: collapse;
+  width : 80%;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
 
 
 
