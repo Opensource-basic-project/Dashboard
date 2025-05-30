@@ -202,14 +202,70 @@ a {
   white-space: nowrap;
 }
 .container {
-  margin-top: 80px;
-  margin-left:90px;
-  margin-right:90px;
+  margin-top: 90px;
+  margin-left:100px;
+  margin-right:100px;
   display: flex;
+  justify-content: space-between;
   align-items: center; /* 수직 중앙 정렬 */
   gap: 10px; /* 사각형과 텍스트 사이 간격 */  
 }
-
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.page-title {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 40px;
+  line-height: 110%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.rectangle-1244 {
+  background: #4b65a2;
+  width: 11px;
+  height: 38px;
+}
+.status-buttons {
+  display: flex;
+  gap: 15px;
+  margin-left: 30px;
+}
+.status-buttons .btn {
+  font-size: 17px;
+  padding: 7px 17px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ccc;
+  color: #333;
+  cursor: pointer;
+  font-weight: 600;
+}
+.status-buttons .btn.active {
+  background-color: #4B65A2;
+  color: white;
+}
+.breadcrumb {
+  right: 0;
+  top: 100%;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.breadcrumb .home-icon {
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/svg/vector12.svg"); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .line-13 {
   max-width: calc(100% - 70px);
   margin-top: 20px;
@@ -219,20 +275,6 @@ a {
   border-color: #e0e0e0;
   border-width: 4px 0 0 0;
   height: 0px;
-}
-.rectangle-1244 {
-  background: #4b65a2;
-  width: 11px;
-  height: 38px;
-}
-.div47 {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-SemiBold", sans-serif;
-  font-size: 40px;
-  line-height: 110%;
-  letter-spacing: -0.02em;
-  font-weight: 600;
 }
 .div12{
     width : 79%;
