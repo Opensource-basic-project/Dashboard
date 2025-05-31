@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from db import SessionLocal, PlenaryBill  # PlenaryBill 테이블 import
+import math
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -19,6 +20,7 @@ def get_plenary_bills(
     page: int = 1,
     size: int = 15,
     query: str = "",
+    committee: str = "",
     db: Session = Depends(get_db)
 ):
     query_obj = db.query(PlenaryBill)
@@ -30,12 +32,15 @@ def get_plenary_bills(
             (PlenaryBill.proposer.ilike(query_filter))
         )
 
+    if committee:
+        query_obj = query_obj.filter(PlenaryBill.curr_committee == committee)
+
     total_count = query_obj.count()
 
-    bills = query_obj.order_by(PlenaryBill.id.desc()) \
-                     .offset((page - 1) * size) \
-                     .limit(size) \
-                     .all()
+    bills = query_obj.order_by(PlenaryBill.propose_dt.desc()) \
+                 .offset((page - 1) * size) \
+                 .limit(size) \
+                 .all()
 
     bill_list = []
     for bill in bills:
@@ -48,6 +53,17 @@ def get_plenary_bills(
             "PROPOSE_DT": bill.propose_dt,
             "LINK_URL": bill.link_url
         })
+        
+    total_pages = math.ceil(total_count / size)
+    max_buttons = 7
+    half = max_buttons // 2
+
+    start_page = max(1, page - half)
+    end_page = start_page + max_buttons - 1
+    if end_page > total_pages:
+        end_page = total_pages
+        start_page = max(1, end_page - max_buttons + 1)
+
 
     return templates.TemplateResponse("plenary_bills_list.html", {
         "request": request,
@@ -55,5 +71,9 @@ def get_plenary_bills(
         "page": page,
         "size": size,
         "query": query,
-        "total_count": total_count
+        "committee": committee,
+        "total_count": total_count,
+        "start_page": start_page,
+        "end_page": end_page,
+        "total_pages": total_pages, 
     })
