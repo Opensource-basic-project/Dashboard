@@ -17,7 +17,6 @@ def get_db():
     finally:
         db.close()
 
-# API + 크롤링 fallback
 def get_link_url_from_api(bill_id: str, age=22, max_pages=5):
     url = "https://open.assembly.go.kr/portal/openapi/nknalejkafmvgzmpt"
     for pIndex in range(1, max_pages + 1):
@@ -75,11 +74,11 @@ def legislation_ongoing_detail(request: Request, bill_id: str, db: Session = Dep
             "link_url": bill.link_url
         })
 
-    # fallback: 외부 API + 크롤링
+    # fallback
     link_url, bill_data = get_link_url_from_api(bill_id)
     if not link_url:
         raise HTTPException(status_code=404, detail="해당 법안을 찾을 수 없습니다.")
-
+    
     proposal_text = crawl_proposal_detail(link_url)
     return templates.TemplateResponse("legislation_notice_ongoing_detail.html", {
         "request": request,
