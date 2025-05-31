@@ -19,6 +19,7 @@ class LegislationNotice(Base):  #진행중 입법예고
     link_url = Column(String)
     curr_committee = Column(String)
     announce_dt = Column(String)
+    proposal_text = Column(String)
 
 class EndedLegislationNotice(Base):  # 종료된 입법예고
     __tablename__ = "ended_legislation_notices"
@@ -31,6 +32,7 @@ class EndedLegislationNotice(Base):  # 종료된 입법예고
     link_url = Column(String)
     curr_committee = Column(String)
     announce_dt = Column(String)
+    proposal_text = Column(String)
 
 class PlenaryBill(Base):
     __tablename__ = "plenary_bills"

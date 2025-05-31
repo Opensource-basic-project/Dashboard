@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 import requests
 from bs4 import BeautifulSoup
+import re
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -48,6 +49,8 @@ def crawl_proposal_detail(link_url: str):
                 desc_div = item.find("div", class_="desc")
                 if desc_div:
                     text = desc_div.get_text(separator="\n").strip()
+                    
+                    text = re.sub(r'^[ \t]+', '', text, flags=re.MULTILINE)
                     return text
     except Exception as e:
         print(f"크롤링 에러: {e}")
