@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from db import SessionLocal, EndedLegislationNotice  # 종료 테이블 import
+from db import SessionLocal, EndedLegislationNotice
+import math
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -14,9 +15,16 @@ def get_db():
         db.close()
 
 @router.get("/legislation_notice_ended")
-def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, query: str = "", db: Session = Depends(get_db)):
-    # DB에서 쿼리 및 페이징 처리
+def legislation_notice_ended(
+    request: Request,
+    page: int = 1,
+    size: int = 15,
+    query: str = "",
+    committee: str = "",
+    db: Session = Depends(get_db)
+):
     query_obj = db.query(EndedLegislationNotice)
+
     if query:
         query_filter = f"%{query}%"
         query_obj = query_obj.filter(
@@ -24,6 +32,9 @@ def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, qu
             (EndedLegislationNotice.proposer.ilike(query_filter))
         )
 
+    if committee:
+        query_obj = query_obj.filter(LegislationNotice.curr_committee == committee)
+    
     total_count = query_obj.count()
 
     notices = query_obj.order_by(EndedLegislationNotice.announce_dt.desc()) \
@@ -43,11 +54,25 @@ def legislation_notice_ended(request: Request, page: int = 1, size: int = 15, qu
             "ANNOUNCE_DT": n.announce_dt,
         })
 
+    total_pages = math.ceil(total_count / size)
+    max_buttons = 7
+    half = max_buttons // 2
+
+    start_page = max(1, page - half)
+    end_page = start_page + max_buttons - 1
+    if end_page > total_pages:
+        end_page = total_pages
+        start_page = max(1, end_page - max_buttons + 1)
+
     return templates.TemplateResponse("legislation_notice_ended_list.html", {
         "request": request,
         "ended_notices": notices_list,
         "page": page,
         "size": size,
         "query": query,
+        "committee": committee,
         "total_count": total_count,
+        "start_page": start_page,
+        "end_page": end_page,
+        "total_pages": total_pages,
     })

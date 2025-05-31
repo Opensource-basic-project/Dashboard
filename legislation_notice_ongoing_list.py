@@ -54,7 +54,6 @@ def legislation_notice_ongoing(
             "ANNOUNCE_DT": n.announce_dt,
         })
 
-    # ✅ 페이지네이션 번호 계산 추가
     total_pages = math.ceil(total_count / size)
     max_buttons = 7
     half = max_buttons // 2
@@ -75,5 +74,5 @@ def legislation_notice_ongoing(
         "total_count": total_count,
         "start_page": start_page,
         "end_page": end_page,
-        "total_pages": total_pages,  # 선택적
+        "total_pages": total_pages,  
     })
