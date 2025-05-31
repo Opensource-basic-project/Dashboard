@@ -45,6 +45,7 @@ class PlenaryBill(Base):
     link_url = Column(String)
     propose_dt = Column(String)      
     committee_nm = Column(String) 
+    proposal_text = Column(String)
     
 def init_db():
     Base.metadata.create_all(bind=engine)
