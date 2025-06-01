@@ -33,7 +33,7 @@ def legislation_notice_ended(
         )
 
     if committee:
-        query_obj = query_obj.filter(LegislationNotice.curr_committee == committee)
+        query_obj = query_obj.filter(EndedLegislationNotice.curr_committee == committee)
     
     total_count = query_obj.count()
 
