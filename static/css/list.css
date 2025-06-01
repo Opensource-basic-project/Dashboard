@@ -160,9 +160,9 @@ a {
   min-width: 0;      /* 내용이 넘쳐도 줄어들 수 있게 함 */
   background: #e6e7ea;
 }
-.item-4{
+.active{
   padding: 5px;
-  background: #f3f2f2;
+  background: white;
 }
 .div11 {
   background: #e6e7ea;
