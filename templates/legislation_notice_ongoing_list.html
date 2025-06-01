@@ -87,6 +87,8 @@
           {% for c in committees %}
             <option value="{{ c }}" {% if committee == c %}selected{% endif %}>{{ c }}</option>
           {% endfor %}
+            <option value="기타" {% if committee == '기타' %}selected{% endif %}>기타</option>
+
         </select>
 
         <input type="hidden" name="page" value="1">

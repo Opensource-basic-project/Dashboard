@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from db import SessionLocal, PlenaryBill  # PlenaryBill 테이블 import
 import math
+from sqlalchemy import not_
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -21,6 +22,7 @@ def get_plenary_bills(
     size: int = 15,
     query: str = "",
     committee: str = "",
+    result: str = "",
     db: Session = Depends(get_db)
 ):
     query_obj = db.query(PlenaryBill)
@@ -32,9 +34,19 @@ def get_plenary_bills(
             (PlenaryBill.proposer.ilike(query_filter))
         )
 
-    if committee:
-        query_obj = query_obj.filter(PlenaryBill.curr_committee == committee)
 
+    STANDARD_COMMITTEES = [
+        '국회운영위원회', '법제사법위원회', '정무위원회', '기획재정위원회', '교육위원회',
+        '과학기술정보방송통신위원회', '외교통일위원회', '국방위원회', '행정안전위원회', '문화체육관광위원회',
+        '농림축산식품해양수산위원회', '산업통상자원중소벤처기업위원회', '보건복지위원회',
+        '환경노동위원회', '국토교통위원회', '정보위원회', '여성가족위원회', '예산결산특별위원회'
+    ]
+    if committee == "기타":
+        query_obj = query_obj.filter(not_(PlenaryBill.committee_nm.in_(STANDARD_COMMITTEES)))
+    elif committee:
+        query_obj = query_obj.filter(PlenaryBill.committee_nm == committee)
+        
+    
     total_count = query_obj.count()
 
     bills = query_obj.order_by(PlenaryBill.propose_dt.desc()) \
