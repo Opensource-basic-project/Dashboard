@@ -47,5 +47,15 @@ class PlenaryBill(Base):
     committee_nm = Column(String) 
     proposal_text = Column(String)
     
+class ForeignLawTrend(Base):
+    __tablename__ = "foreign_law_trends"
+
+    cn = Column(String, primary_key=True, index=True)  # 제어번호
+    title = Column(String)
+    nation_name = Column(String)
+    procl_date = Column(String)
+    asc_info = Column(String)
+    detail_url = Column(String)
+    
 def init_db():
     Base.metadata.create_all(bind=engine)
