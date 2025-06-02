@@ -337,6 +337,7 @@ th, td {
     background-color: #fff; 
     border-left: none;
     border-right: none;
+    font-size: medium;
 }
 th {
     background-color: #4B65A2;
