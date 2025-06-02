@@ -7,7 +7,8 @@ from legislation_notice_ongoing_list import router as notice_list_router
 from legislation_notice_ended_list import router as notice_list_ended_router
 from legislation_notice_ongoing_detail import router as notice_detail_router
 from legislation_notice_ended_detail import router as notice_detail_ended_router
-from nationality_trends_list import router as nationality_trends_router
+from legislative_trends_list import router as trends_router
+from legislative_trends_detail import router as trends_detail_router
 
 #static
 from fastapi.staticfiles import StaticFiles
@@ -25,7 +26,8 @@ app.include_router(notice_list_router)
 app.include_router(notice_list_ended_router)
 app.include_router(notice_detail_router)
 app.include_router(notice_detail_ended_router)
-app.include_router(nationality_trends_router)
+app.include_router(trends_router)
+app.include_router(trends_detail_router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 

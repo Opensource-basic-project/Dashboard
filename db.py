@@ -56,6 +56,7 @@ class ForeignLawTrend(Base):
     procl_date = Column(String)
     asc_info = Column(String)
     detail_url = Column(String)
+    proposal_text = Column(String)
     
 def init_db():
     Base.metadata.create_all(bind=engine)
