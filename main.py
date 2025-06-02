@@ -27,6 +27,7 @@ app.include_router(notice_detail_ended_router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+#가상환경 권환 : Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 #가상환경 활성화 : .\venv\Scripts\Activate.ps1
 #서버 실행 : uvicorn main:app --reload
 
