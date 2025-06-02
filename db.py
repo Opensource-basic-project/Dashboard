@@ -58,5 +58,16 @@ class ForeignLawTrend(Base):
     detail_url = Column(String)
     proposal_text = Column(String)
     
+class ForeignLawExample(Base):
+    __tablename__ = "foreign_law_examples"
+    id = Column(Integer, primary_key=True, index=True)
+    cn = Column(String, unique=True, index=True)
+    title = Column(String)
+    rel_law = Column(String)
+    asc_name = Column(String)
+    issue_date = Column(String)
+    detail_url = Column(String)
+    proposal_text = Column(String)
+    
 def init_db():
     Base.metadata.create_all(bind=engine)
