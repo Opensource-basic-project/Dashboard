@@ -55,11 +55,10 @@
           <div class="rectangle-1244"></div>
           <h2 class="page-title">진행 중 입법예고</h2>
           <div class="status-buttons">
-            <button class="btn active"><a href="/legislation_notice_ongoing">진행중</a></button>
-            <button class="btn"><a href="/legislation_notice_ended">종료</a></button>
+            <a href="/legislation_notice_ongoing" class="btn {% if request.url.path == '/legislation_notice_ongoing' %}active{% endif %}">진행중</a>
+            <a href="/legislation_notice_ended" class="btn {% if request.url.path == '/legislation_notice_ended' %}active{% endif %}">종료</a>
           </div>
         </div>
-
         <!-- 오른쪽 영역: breadcrumb -->
         <div class="breadcrumb">
           <div class="home-icon"></div>
@@ -77,7 +76,7 @@
         <input class="search-input" type="text" name="query" placeholder="법안명 또는 제안자 검색" value="{{ query }}">
 
         <select name="committee" class="filter-select">
-          <option value="">전체</option>
+          <option value="">상임위 전체</option>
           {% set committees = [
               '국회운영위원회', '법제사법위원회', '정무위원회', '기획재정위원회', '교육위원회',
               '과학기술정보방송통신위원회', '외교통일위원회', '국방위원회', '행정안전위원회', '문화체육관광위원회',
@@ -88,7 +87,6 @@
             <option value="{{ c }}" {% if committee == c %}selected{% endif %}>{{ c }}</option>
           {% endfor %}
             <option value="기타" {% if committee == '기타' %}selected{% endif %}>기타</option>
-
         </select>
 
         <input type="hidden" name="page" value="1">
@@ -164,8 +162,6 @@
           <span class="page-arrow last disabled"></span>
         {% endif %}
       </div>
-
-
     </div>
 
 </body>

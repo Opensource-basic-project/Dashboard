@@ -60,7 +60,7 @@
         <input class="search-input" type="text" name="query" placeholder="법안명 또는 제안자 검색" value="{{ query }}">
 
         <select name="committee" class="filter-select">
-          <option value="">전체</option>
+          <option value="">상임위 전체</option>
           {% set committees = [
               '국회운영위원회', '법제사법위원회', '정무위원회', '기획재정위원회', '교육위원회',
               '과학기술정보방송통신위원회', '외교통일위원회', '국방위원회', '행정안전위원회', '문화체육관광위원회',
@@ -70,16 +70,22 @@
           {% for c in committees %}
             <option value="{{ c }}" {% if committee == c %}selected{% endif %}>{{ c }}</option>
           {% endfor %}
-            <option value="기타" {% if committee == '기타' %}selected{% endif %}>기타</option>
+          <option value="기타" {% if committee == '기타' %}selected{% endif %}>기타</option>
         </select>
 
-  
+        <select name="result" class="filter-select">
+          <option value="">결과 전체</option>
+          <option value="원안가결" {% if result == '원안가결' %}selected{% endif %}>원안가결</option>
+          <option value="수정가결" {% if result == '수정가결' %}selected{% endif %}>수정가결</option>
+          <option value="철회" {% if result == '철회' %}selected{% endif %}>철회</option>
+          <option value="부결" {% if result == '부결' %}selected{% endif %}>부결</option>
+          <option value="기타" {% if result == '기타' %}selected{% endif %}>기타</option>
+        </select>
 
         <input type="hidden" name="page" value="1">
         <input type="hidden" name="size" value="{{ size }}">
         <button type="submit" class="search-button"></button>
-    </form>
-
+      </form>
     </div>
 
     <div class="card">
@@ -114,14 +120,10 @@
 
       <div class="pagination">
         {% if page > 1 %}
-          <a class="page-arrow first" href="?page=1&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
+          <a class="page-arrow first" href="?page=1&size={{ size }}&query={{ query }}&committee={{ committee }}&result={{ result }}"></a>
+          <a class="page-arrow prev" href="?page={{ page - 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}&result={{ result }}"></a>
         {% else %}
           <span class="page-arrow first disabled"></span>
-        {% endif %}
-
-        {% if page > 1 %}
-          <a class="page-arrow prev" href="?page={{ page - 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
-        {% else %}
           <span class="page-arrow prev disabled"></span>
         {% endif %}
 
@@ -129,25 +131,22 @@
           {% if p == page %}
             <span class="page-number active">{{ p }}</span>
           {% else %}
-            <a class="page-number" href="?page={{ p }}&size={{ size }}&query={{ query }}&committee={{ committee }}">{{ p }}</a>
+            <a class="page-number" href="?page={{ p }}&size={{ size }}&query={{ query }}&committee={{ committee }}&result={{ result }}">{{ p }}</a>
           {% endif %}
         {% endfor %}
 
         {% if page < total_pages %}
-          <a class="page-arrow next" href="?page={{ page + 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
+          <a class="page-arrow next" href="?page={{ page + 1 }}&size={{ size }}&query={{ query }}&committee={{ committee }}&result={{ result }}"></a>
+          <a class="page-arrow last" href="?page={{ total_pages }}&size={{ size }}&query={{ query }}&committee={{ committee }}&result={{ result }}"></a>
         {% else %}
           <span class="page-arrow next disabled"></span>
-        {% endif %}
-
-        {% if page < total_pages %}
-          <a class="page-arrow last" href="?page={{ total_pages }}&size={{ size }}&query={{ query }}&committee={{ committee }}"></a>
-        {% else %}
           <span class="page-arrow last disabled"></span>
         {% endif %}
       </div>
     </div>
 </body>
 </html>
+
 
 
 
