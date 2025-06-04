@@ -61,8 +61,10 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
             "request": request,
             "bill": {
                 "BILL_ID": bill.bill_id,
+                "BILL_NO": bill.bill_no,
                 "BILL_NAME": bill.bill_name,
                 "PROPOSER": bill.proposer,
+                "PROPOSE_DT": bill.propose_dt,
                 "PROC_RESULT_CD": bill.proc_result_cd,
             },
             "proposal_text": bill.proposal_text or "제안이유 및 주요내용을 등록 중입니다.",
@@ -77,7 +79,15 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
     proposal_text = crawl_proposal_detail(link_url)
     return templates.TemplateResponse("plenary_bills_detail.html", {
         "request": request,
-        "bill": bill_data,
+        "bill": {
+            "BILL_ID": bill_data.get("BILL_ID"),
+            "BILL_NO": bill_data.get("BILL_NO"),
+            "BILL_NAME": bill_data.get("BILL_NAME"),
+            "PROPOSER": bill_data.get("PROPOSER"),
+            "PROPOSE_DT": bill_data.get("PROPOSE_DT"),
+            "PROC_RESULT_CD": bill_data.get("PROC_RESULT_CD"),
+        },
         "proposal_text": proposal_text,
         "link_url": link_url
     })
+

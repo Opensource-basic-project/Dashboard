@@ -53,8 +53,10 @@
 
     <div class="detail">
         <h1>{{ bill.BILL_NAME }}</h1>
-        <p>발의자: {{ bill.PROPOSER }}</p>
-        <p>처리 상태: {{ bill.PROC_RESULT_CD }}</p>
+        <p><strong>의안 번호:</strong> {{ bill.BILL_NO }}</p>
+        <p><strong>발의자:</strong> {{ bill.PROPOSER }}</p>
+        <p><strong>제안일:</strong> {{ bill.PROPOSE_DT }}</p>
+        <p><strong>처리 상태:</strong> {{ bill.PROC_RESULT_CD }}</p>
 
         <h2>제안 이유 및 주요 내용</h2>
         <div class="proposal-text">{{ proposal_text }}</div>

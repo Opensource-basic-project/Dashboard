@@ -13,6 +13,7 @@ class LegislationNotice(Base):  #진행중 입법예고
 
     id = Column(Integer, primary_key=True, index=True)
     bill_name = Column(String)
+    bill_no = Column(String, index=True)
     proposer = Column(String)
     bill_id = Column(String)
     noti_ed_dt = Column(String)
@@ -26,6 +27,7 @@ class EndedLegislationNotice(Base):  # 종료된 입법예고
 
     id = Column(Integer, primary_key=True, index=True)
     bill_name = Column(String)
+    bill_no = Column(String, index=True)
     proposer = Column(String)
     bill_id = Column(String, index=True)
     noti_ed_dt = Column(String)
@@ -39,6 +41,7 @@ class PlenaryBill(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     bill_id = Column(String, index=True)
+    bill_no = Column(String, index=True)
     bill_name = Column(String)
     proposer = Column(String)
     proc_result_cd = Column(String)
@@ -50,9 +53,10 @@ class PlenaryBill(Base):
 class ForeignLawTrend(Base):
     __tablename__ = "foreign_law_trends"
 
-    cn = Column(String, primary_key=True, index=True)  # 제어번호
+    cn = Column(String, primary_key=True, index=True) 
     title = Column(String)
     nation_name = Column(String)
+    org_law_name = Column(String)
     procl_date = Column(String)
     asc_info = Column(String)
     detail_url = Column(String)

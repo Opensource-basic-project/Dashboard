@@ -28,6 +28,7 @@ def save_plenary_bills_to_db(db: Session, bills: list):
 
         new_bill = PlenaryBill(
             bill_id=bill_id,
+            bill_no=bill.get("BILL_NO"),
             bill_name=bill.get("BILL_NM"),
             proposer=bill.get("PROPOSER"),
             proc_result_cd=bill.get("PROC_RESULT_CD"),
@@ -43,7 +44,7 @@ def update_plenary_bills_db():
     all_rows = []
     for pIndex in range(1, 6):
         data = fetch_plenary_bills(age, pIndex=pIndex, pSize=100)
-        bills_data = data.get("nwbpacrgavhjryiph", [])  # 정확한 키는 실제 API 응답 확인 필요
+        bills_data = data.get("nwbpacrgavhjryiph", []) 
         if not bills_data:
             break
         for item in bills_data:

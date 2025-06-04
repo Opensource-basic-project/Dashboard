@@ -30,6 +30,7 @@ def save_foreign_trends_to_db(db: Session, items: list):
             cn=cn,
             title=item.get("TITLE"),
             nation_name=item.get("NATION_NAME"),
+            org_law_name=item.get("ORG_LAW_NAME"),
             procl_date=item.get("PROCL_DATE"),
             asc_info=item.get("ASC_INFO"),
             detail_url=item.get("DETAIL_URL")
