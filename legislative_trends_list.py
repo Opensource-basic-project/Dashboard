@@ -23,7 +23,7 @@ STANDARD_COMMITTEES = [
     '환경노동위원회', '국토교통위원회', '정보위원회', '여성가족위원회', '예산결산특별위원회'
 ]
 
-@router.get("/legislative-trends")
+@router.get("/legislative_trends")
 def legislative_trends(
     request: Request,
     page: int = 1,

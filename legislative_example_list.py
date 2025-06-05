@@ -31,7 +31,7 @@ NATION_KEYWORDS = {
     "유럽연합": ["EU", "유럽연합", "European Union"]
 }
 
-@router.get("/legislative-examples")
+@router.get("/legislative_examples")
 def legislative_examples(
     request: Request,
     page: int = 1,

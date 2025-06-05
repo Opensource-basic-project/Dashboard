@@ -14,7 +14,7 @@ def get_db():
     finally:
         db.close()
 
-@router.get("/legislation-notice")
+@router.get("/legislation_notice")
 def legislation_notice_combined(
     request: Request,
     page_ongoing: int = 1,
