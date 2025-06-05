@@ -12,6 +12,7 @@ from legislative_trends_detail import router as trends_detail_router
 from legislative_example_list import router as example_list_router
 from legislative_example_detail import router as example_detail_router 
 from legislation_notice import router as legislation_notice_router
+from foreign_legislation import router as foreign_legislation_router
 
 #static
 from fastapi.staticfiles import StaticFiles
@@ -34,6 +35,7 @@ app.include_router(trends_detail_router)
 app.include_router(example_list_router)
 app.include_router(example_detail_router) 
 app.include_router(legislation_notice_router)
+app.include_router(foreign_legislation_router)
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

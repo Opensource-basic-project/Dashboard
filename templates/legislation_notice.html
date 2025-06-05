@@ -33,6 +33,7 @@
       gap: 20px;
       width:90%;
       margin: 0 auto;
+      margin-top:20px;
     }
 
     .card {
@@ -55,6 +56,9 @@
         font-size: 24px;
         min-width: 170px;
         text-align: center;
+        background-color: #ffffff;
+        border-style: solid;
+        border-color:#E0E0E0;
     }
     th,td{
       padding : 4px 13px;
@@ -106,7 +110,7 @@
   <!-- 진행 중 입법예고 -->
   <div class="notice-box">
     <div class="status-buttons">
-      <a href="/legislation_notice_ongoing" class="btn {% if request.url.path == '/legislation_notice_ongoing' %}active{% endif %}">진행중</a>
+      <a href="/legislation_notice_ongoing" class="btn">진행중</a>
     </div>
     <div class="card">
       <div>총 <strong>{{ total_count_ongoing }}건</strong> ({{ page_ongoing }} / {{ total_pages_ongoing }})</div>
@@ -147,7 +151,7 @@
   <!-- 종료된 입법예고 -->
   <div class="notice-box">
     <div class="status-buttons">
-      <a href="/legislation_notice_ended" class="btn {% if request.url.path == '/legislation_notice_ended' %}active{% endif %}">종료</a>
+      <a href="/legislation_notice_ended" class="btn">종료</a>
     </div>
     <div class="card">
       <div>총 <strong>{{ total_count_ended }}건</strong> ({{ page_ended }} / {{ total_pages_ended }})</div>

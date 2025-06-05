@@ -350,7 +350,7 @@ th {
 }
 th:first-child,
 td:first-child {
-    border-left: 1px solid #ccc;
+    border-left: 3px solid #ccc;
     border-radius: 10px 0 0 10px;
 }
 
