@@ -19,7 +19,13 @@
       margin: 0;
       padding: 0;
     }
-
+    .bell {
+        width: 50px;
+        height: 50px;
+        background: url('/static/svg/mdi-bell0.svg') no-repeat center;
+        background-size: 50px 50px;
+        border: none;
+    }
     .dual-container {
       display: flex;
       justify-content: space-between;
@@ -57,7 +63,8 @@
       margin-top:10px;
     }
     th:nth-child(1), td:nth-child(1) { width: 22%; } 
-    th:nth-child(2), td:nth-child(2) { width: 78%; }     
+    th:nth-child(2), td:nth-child(2) { width: 78%; }    
+
   </style>
 </head>
 <body>
@@ -81,6 +88,10 @@
         <div class="left-section">
           <div class="rectangle-1244"></div>
           <h2 class="page-title">입법예고</h2>
+          <div class="bell"></div>
+          <div style="color:#666666;">
+            법령의 제정, 개정, 폐지 과정에서 <br>
+            국민의 의견을 수렴하고 참여를 확대하기 위한 제도</div>
         </div>
         <!-- 오른쪽 영역: breadcrumb -->
         <div class="breadcrumb">

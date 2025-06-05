@@ -17,12 +17,20 @@ def get_db():
 
 def crawl_meta_description(link_url: str):
     try:
-        headers = {"User-Agent": "Mozilla/5.0"}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        }
         res = requests.get(link_url, headers=headers, timeout=5)
         res.raise_for_status()
         soup = BeautifulSoup(res.text, "html.parser")
+
         tag = soup.find("meta", attrs={"name": "description"})
-        return tag["content"].replace("<br/>", "<br>").strip() if tag else None
+        if tag and tag.get("content"):
+            # ✅ 줄마다 공백 제거 후 줄바꿈 정리
+            raw = tag["content"].replace("<br/>", "\n").replace("<br>", "\n")
+            cleaned_lines = [line.strip() for line in raw.splitlines() if line.strip()]
+            return "\n".join(cleaned_lines)
+        return None
     except Exception as e:
         print(f"[크롤링 오류] {link_url}: {e}")
         return "상세 설명을 불러올 수 없습니다."

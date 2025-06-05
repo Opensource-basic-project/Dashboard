@@ -160,9 +160,9 @@ a {
   min-width: 0;      /* 내용이 넘쳐도 줄어들 수 있게 함 */
   background: #e6e7ea;
 }
-.item-4{
+.active{
   padding: 5px;
-  background: #f3f2f2;
+  background: white;
 }
 .div11 {
   background: #e6e7ea;
@@ -260,23 +260,110 @@ a {
 .detail {
   width:90%;
   margin: 40px auto;  /* 위 아래 40px 여백, 좌우는 auto로 가운데 정렬 */
-  margin-top :10px;
+  margin-top :50px;
   padding: 20px;
   padding-top: 3px;
   background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 선택 사항: 가벼운 그림자 */
-  border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 15px; /* 선택 사항: 모서리 둥글게 */
+  border-style: solid;
+  border-color: #e0e0e0;
   line-height: 1.6; /* 가독성 향상 */
 
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
 }
+.detail h1 {
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+.bill-info-table {
+  width: 60%;
+  margin: 0 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.bill-info-table th {
+  background-color: #e6e7ea;
+  padding: 3px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  border: 1px solid #ddd;
+}
+
+.bill-info-table td {
+  background-color: #fff;
+  padding: 3px;
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  word-break: break-word;
+}
+th:nth-child(1), td:nth-child(1) { width: 15%; }  /* 발의일 */
+th:nth-child(2), td:nth-child(2) { width: 40%; }  /* 법안명 */
+th:nth-child(3), td:nth-child(3) { width: 20%; }  /* 상임위 */
+th:nth-child(4), td:nth-child(4) { width: 20%; }  /* 처리 결과 */
+
 .proposal-text {
     width: 90%;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
-  line-height: 1.6;
+  line-height: 1.3;
+}
+.bill-review-table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: 15px;
 }
 
+.bill-review-table th,
+.bill-review-table td {
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    text-align: center;
+}
+
+.bill-review-table th {
+    background-color: #e6e7ea;
+    font-weight: bold;
+    color: #333;
+}
+
+.bill-review-table td {
+    background-color: #fff;
+    color: #444;
+}
+
+.bill-review-table tr:nth-child(even) td {
+    background-color: white;
+}
+.bill-review-table th:nth-child(1),
+.bill-review-table td:nth-child(1) {
+  width: 16.6%;
+}
+.bill-review-table th:nth-child(2),
+.bill-review-table td:nth-child(2) {
+  width: 16.6%;
+}
+.bill-review-table th:nth-child(3),
+.bill-review-table td:nth-child(3) {
+  width: 16.6%;
+}
+.bill-review-table th:nth-child(4),
+.bill-review-table td:nth-child(4) {
+  width: 16.6%;
+}
+.bill-review-table th:nth-child(5),
+.bill-review-table td:nth-child(5) {
+  width: 16.6%;
+}
+.bill-review-table th:nth-child(6),
+.bill-review-table td:nth-child(6) {
+  width: 16.6%;
+}

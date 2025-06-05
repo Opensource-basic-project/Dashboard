@@ -301,7 +301,7 @@ form{
   width: 150px;
 }
 .search-input{
-  border: 1px solid #474747;
+  border: 1px solid #ccc;
   border-radius: 8px;
   width: 250px;
   height: 25px;

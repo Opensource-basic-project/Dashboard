@@ -68,7 +68,15 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
                 "PROC_RESULT_CD": bill.proc_result_cd,
             },
             "proposal_text": bill.proposal_text or "제안이유 및 주요내용을 등록 중입니다.",
-            "link_url": bill.link_url
+            "link_url": bill.link_url,
+            "review_info": {
+                "so_committee_date": bill.so_committee_date or "",
+                "so_committee_result": bill.so_committee_result or "",
+                "law_committee_date": bill.law_committee_date or "",
+                "law_committee_result": bill.law_committee_result or "",
+                "plenary_vote_date": bill.plenary_vote_date or "",
+                "plenary_vote_result": bill.plenary_vote_result or "",
+            }
         })
 
     # fallback: API + 크롤링
@@ -77,17 +85,25 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
         raise HTTPException(status_code=404, detail="해당 법안을 찾을 수 없습니다.")
     
     proposal_text = crawl_proposal_detail(link_url)
+
     return templates.TemplateResponse("plenary_bills_detail.html", {
         "request": request,
         "bill": {
-            "BILL_ID": bill_data.get("BILL_ID"),
-            "BILL_NO": bill_data.get("BILL_NO"),
-            "BILL_NAME": bill_data.get("BILL_NAME"),
-            "PROPOSER": bill_data.get("PROPOSER"),
-            "PROPOSE_DT": bill_data.get("PROPOSE_DT"),
-            "PROC_RESULT_CD": bill_data.get("PROC_RESULT_CD"),
+            "BILL_ID": bill_data.get("BILL_ID", ""),
+            "BILL_NO": bill_data.get("BILL_NO", ""),
+            "BILL_NAME": bill_data.get("BILL_NAME", ""),
+            "PROPOSER": bill_data.get("PROPOSER", ""),
+            "PROPOSE_DT": bill_data.get("PROPOSE_DT", ""),
+            "PROC_RESULT_CD": bill_data.get("PROC_RESULT_CD", ""),
         },
         "proposal_text": proposal_text,
-        "link_url": link_url
+        "link_url": link_url,
+        "review_info": {  # ✅ fallback에도 반드시 포함
+            "so_committee_date": "",
+            "so_committee_result": "",
+            "law_committee_date": "",
+            "law_committee_result": "",
+            "plenary_vote_date": "",
+            "plenary_vote_result": "",
+        }
     })
-

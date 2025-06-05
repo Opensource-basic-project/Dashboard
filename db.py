@@ -50,6 +50,14 @@ class PlenaryBill(Base):
     committee_nm = Column(String) 
     proposal_text = Column(String)
     
+    so_committee_date = Column(String)
+    so_committee_result = Column(String)
+    law_committee_date = Column(String)
+    law_committee_result = Column(String)
+    plenary_vote_date = Column(String)
+    plenary_vote_result = Column(String)
+    
+    
 class ForeignLawTrend(Base):
     __tablename__ = "foreign_law_trends"
 
