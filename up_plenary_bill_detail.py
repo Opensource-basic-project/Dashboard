@@ -18,13 +18,11 @@ def crawl_plenary_review_info(soup):
             return 처리일, 처리결과
         return "", ""
 
-    # 소관위 심사정보: 처리일 = td[3], 처리결과 = td[4]
+    # 소관위 심사정보
     so_date, so_result = extract("소관위 심사정보", 3, 4)
-
-    # 법사위 심사정보: 처리일 = td[2], 처리결과 = td[3]
+    # 법사위 심사정보
     law_date, law_result = extract("법사위 체계자구심사정보", 2, 3)
-
-    # 본회의 심의정보: 의결일 = td[1], 회의결과 = td[3]
+    # 본회의 심의정보
     plenary_date, plenary_result = extract("본회의 심의정보", 1, 3)
 
     return {
@@ -42,7 +40,7 @@ def crawl_plenary_proposal_text(link_url: str):
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # ✅ 제안이유 본문
+        # 제안이유 및 주요내용 추출
         summary_div = soup.find("div", id="summaryContentDiv")
         if summary_div:
             raw_text = summary_div.get_text(separator="\n").strip()
@@ -51,7 +49,7 @@ def crawl_plenary_proposal_text(link_url: str):
         else:
             cleaned_text = None
 
-        # ✅ 심사 정보 크롤링
+        # 심사정보 추출
         review_info = crawl_plenary_review_info(soup)
 
         return cleaned_text, review_info
@@ -71,29 +69,27 @@ def update_plenary_proposal_text():
             print(f"[본회의] 📄 {bill.bill_name} - 크롤링 시도 중...")
             detail, review_info = crawl_plenary_proposal_text(bill.link_url)
 
-            if not detail:
-                print(f"[본회의] ❌ 1차 실패, 재시도 중...")
-                time.sleep(1)
-                detail, review_info = crawl_plenary_proposal_text(bill.link_url)
+            if not detail and not any(review_info.values()):
+                print(f"[본회의] 🚫 크롤링 실패: {bill.link_url}")
+                continue
 
-            if detail:
-                changed = False
-                if bill.proposal_text != detail:
-                    bill.proposal_text = detail
+            changed = False
+
+            # 제안이유 갱신
+            if detail and bill.proposal_text != detail:
+                bill.proposal_text = detail
+                changed = True
+
+            # 심사정보 갱신
+            for key, value in review_info.items():
+                if hasattr(bill, key) and getattr(bill, key) != value:
+                    setattr(bill, key, value)
                     changed = True
 
-                # ✅ 심사정보 업데이트
-                for key, value in review_info.items():
-                    if hasattr(bill, key) and getattr(bill, key) != value:
-                        setattr(bill, key, value)
-                        changed = True
-
-                if changed:
-                    print(f"[업데이트] ✏️ {bill.bill_name} - 변경 사항 반영됨")
-                else:
-                    print(f"[유지] ⏩ {bill.bill_name} - 내용 동일, 덮어쓰기 생략")
+            if changed:
+                print(f"[업데이트] ✏️ {bill.bill_name} - 변경 사항 반영됨")
             else:
-                print(f"[본회의] 🚫 크롤링 실패: {bill.link_url}")
+                print(f"[유지] ⏩ {bill.bill_name} - 내용 동일, 덮어쓰기 생략")
 
             time.sleep(1)
 

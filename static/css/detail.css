@@ -303,10 +303,11 @@ a {
   border: 1px solid #ddd;
   word-break: break-word;
 }
-th:nth-child(1), td:nth-child(1) { width: 15%; }  /* 발의일 */
-th:nth-child(2), td:nth-child(2) { width: 40%; }  /* 법안명 */
-th:nth-child(3), td:nth-child(3) { width: 20%; }  /* 상임위 */
-th:nth-child(4), td:nth-child(4) { width: 20%; }  /* 처리 결과 */
+th:nth-child(1), td:nth-child(1) { width: 15%; }  
+th:nth-child(2), td:nth-child(2) { width: 15%; }  
+th:nth-child(3), td:nth-child(3) { width: 25%; }  
+th:nth-child(4), td:nth-child(4) { width: 30%; }  
+th:nth-child(5), td:nth-child(5) { width: 15%; }
 
 .proposal-text {
     width: 90%;

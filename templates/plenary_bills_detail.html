@@ -56,14 +56,16 @@
       <table class="bill-info-table">
         <tr>
           <th>의안 번호</th>
-          <th>발의자</th>
           <th>제안일</th>
+          <th>발의자</th>
+          <th>상임위원회</th>
           <th>처리 상태</th>
         </tr>
         <tr>
           <td>{{ bill.BILL_NO }}</td>
-          <td>{{ bill.PROPOSER }}</td>
           <td>{{ bill.PROPOSE_DT }}</td>
+          <td>{{ bill.PROPOSER }}</td>
+          <td>{{ bill.COMMITTEE_NM if bill.COMMITTEE_NM else '-' }}</td>
           <td>{{ bill.PROC_RESULT_CD }}</td>
         </tr>
       </table>
