@@ -19,6 +19,10 @@
           margin: 0;
           padding: 0;
       }
+      th:nth-child(1), td:nth-child(1) { width: 10%; } 
+      th:nth-child(2), td:nth-child(2) { width: 40%; } 
+      th:nth-child(3), td:nth-child(3) { width: 30%; } 
+      th:nth-child(4), td:nth-child(4) { width: 20%; }  
     </style>
 </head>
 <body>
@@ -43,8 +47,8 @@
         <div class="rectangle-1244"></div>
         <h2 class="page-title">주요국 입법례</h2>
         <div class="status-buttons">
-          <a href="/legislative-trends" class="btn {% if request.url.path == '/legislative-trends' %}active{% endif %}">입법동향</a>
-          <a href="/legislative-examples" class="btn {% if request.url.path == '/legislative-examples' %}active{% endif %}">입법례</a>
+          <a href="/legislative_trends" class="btn {% if request.url.path == '/legislative_trends' %}active{% endif %}">입법동향</a>
+          <a href="/legislative_examples" class="btn {% if request.url.path == '/legislative_examples' %}active{% endif %}">입법례</a>
         </div>
 
       </div>
@@ -61,7 +65,7 @@
       <div class="div13">
         총 <strong>{{ total_count }}건</strong> ({{ page }} / {{ total_pages }} 페이지)
       </div>
-      <form method="get" action="/legislative-examples" class="search-form">
+      <form method="get" action="/legislative_examples" class="search-form">
         <input class="search-input" type="text" name="keyword" placeholder="제목 또는 관련법 검색" value="{{ keyword }}">
 
         <select name="committee" class="filter-select">
@@ -106,7 +110,7 @@
             {% for ex in examples %}
               <tr>
                 <td>{{ ex.ISSUE_DATE }}</td>
-                <td><a href="/legislative-example/{{ ex.CN }}">{{ ex.TITLE }}</a></td>
+                <td><a href="/legislative_example/{{ ex.CN }}">{{ ex.TITLE }}</a></td>
                 <td>{{ ex.REL_LAW }}</td>
                 <td>{{ ex.ASC_NAME }}</td>
               </tr>
