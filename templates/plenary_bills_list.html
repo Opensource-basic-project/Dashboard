@@ -105,7 +105,7 @@
               <tr>
                 <td>{{ bill.PROPOSE_DT }}</td>
                 <td><a href="/plenary/{{ bill.BILL_ID }}">{{ bill.BILL_NM }}</a></td>
-                <td>{{ bill.COMMITTEE_NM }}</td>
+                <td>{{ bill.COMMITTEE_NM if bill.COMMITTEE_NM else '-' }}</td>
                 <td>{{ bill.PROC_RESULT_CD }}</td>
                 <td>{{ bill.PROPOSER }}</td>
               </tr>

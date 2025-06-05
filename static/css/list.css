@@ -322,13 +322,14 @@ form{
   top: 6px;
 }
 table {
-    border-collapse: separate;
-    border-spacing: 0px 8px;
-    width : 100%;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    background-color: #fff;
-    background-color: transparent; 
+  border-collapse: separate;
+  border-spacing: 0px 8px;
+  width : 100%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  background-color: #fff;
+  background-color: transparent;
+  table-layout: fixed; 
 }
 th, td {
     border: 2px solid #ccc;
@@ -338,6 +339,10 @@ th, td {
     border-left: none;
     border-right: none;
     font-size: medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 th {
     background-color: #4B65A2;
@@ -356,8 +361,26 @@ td:last-child {
     border-radius: 0 10px 10px 0;
 }
 
+td a {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+td div, td span {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-
+th:nth-child(1), td:nth-child(1) { width: 10%; }  /* 발의일 */
+th:nth-child(2), td:nth-child(2) { width: 47%; }  /* 법안명 */
+th:nth-child(3), td:nth-child(3) { width: 20%; }  /* 상임위 */
+th:nth-child(4), td:nth-child(4) { width: 8%; }  /* 처리 결과 */
+th:nth-child(5), td:nth-child(5) { width: 15%; }  /* 제안자 */
 /*페이지네이션*/
 .pagination {
   display: flex;
@@ -452,9 +475,6 @@ td:last-child {
   margin: 0 auto;
   padding-bottom: 60px;
 }
-
-
-
 
 
 
