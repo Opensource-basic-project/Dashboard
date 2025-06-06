@@ -368,3 +368,93 @@ th:nth-child(5), td:nth-child(5) { width: 15%; }
 .bill-review-table td:nth-child(6) {
   width: 16.6%;
 }
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0px;
+  color: #333;
+  padding-bottom: 8px;
+  border-bottom: none; /* 경계선 제거 */
+}
+
+.stat-wrapper {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.stat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-main-title {
+  height: 60px; /* ✅ 고정 높이 */
+  width: 600px;
+  width:100%;
+  font-weight: 600;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0 auto;  /* ✅ 중앙 정렬 */
+  line-height: 60px;
+}
+
+
+.stat-main-image {
+  width: 600px;
+  width:100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+
+.stat-sidebar {
+  width: 30%;
+  padding-left: 10px;
+  margin-right: 50px;
+}
+
+.stat-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;  /* 각 항목 사이 간격 */
+  margin-top: 40px;
+}
+
+.stat-sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.graph {
+  width: 40px;
+  height: 40px;
+  background-image: url("/static/svg/data-file-graph-streamline-ultimate0.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.graph-title {
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

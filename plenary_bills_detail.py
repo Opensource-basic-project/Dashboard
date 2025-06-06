@@ -4,10 +4,15 @@ from sqlalchemy.orm import Session
 from db import SessionLocal, PlenaryBill
 import requests
 from bs4 import BeautifulSoup
+import json
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 API_KEY = "145bca1e52594533863a5b12ec70dbc9"
+
+# 이미지 키워드 매핑 JSON 로딩
+with open("keyword_image_map.json", "r", encoding="utf-8") as f:
+    keyword_map = json.load(f)
 
 def get_db():
     db = SessionLocal()
@@ -52,11 +57,23 @@ def crawl_proposal_detail(link_url: str):
         print(f"크롤링 에러: {e}")
     return "제안이유 및 주요내용을 불러올 수 없습니다."
 
+def find_matched_images(bill_name: str):
+    matched = []
+    for topic, config in keyword_map.items():
+        keywords = config.get("keywords", [])
+        for keyword in keywords:
+            if keyword in bill_name:
+                matched.extend(config.get("images", []))
+                break  # 같은 주제에서 하나라도 일치하면 중복 방지
+    return matched
+
+
 @router.get("/plenary/{bill_id}")
 def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(get_db)):
     bill = db.query(PlenaryBill).filter(PlenaryBill.bill_id == bill_id).first()
 
     if bill:
+        matched_images = find_matched_images(bill.bill_name)
         return templates.TemplateResponse("plenary_bills_detail.html", {
             "request": request,
             "bill": {
@@ -77,22 +94,25 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
                 "law_committee_result": bill.law_committee_result or "",
                 "plenary_vote_date": bill.plenary_vote_date or "",
                 "plenary_vote_result": bill.plenary_vote_result or "",
-            }
+            },
+            "matched_images": matched_images
         })
 
     # fallback: API + 크롤링
     link_url, bill_data = get_link_url_from_api(bill_id)
     if not link_url:
         raise HTTPException(status_code=404, detail="해당 법안을 찾을 수 없습니다.")
-    
+
     proposal_text = crawl_proposal_detail(link_url)
+    bill_name = bill_data.get("BILL_NAME", "")
+    matched_images = find_matched_images(bill_name)
 
     return templates.TemplateResponse("plenary_bills_detail.html", {
         "request": request,
         "bill": {
             "BILL_ID": bill_data.get("BILL_ID", ""),
             "BILL_NO": bill_data.get("BILL_NO", ""),
-            "BILL_NAME": bill_data.get("BILL_NAME", ""),
+            "BILL_NAME": bill_name,
             "PROPOSER": bill_data.get("PROPOSER", ""),
             "PROPOSE_DT": bill_data.get("PROPOSE_DT", ""),
             "PROC_RESULT_CD": bill_data.get("PROC_RESULT_CD", ""),
@@ -100,12 +120,13 @@ def plenary_bills_detail(request: Request, bill_id: str, db: Session = Depends(g
         },
         "proposal_text": proposal_text,
         "link_url": link_url,
-        "review_info": {  # ✅ fallback에도 반드시 포함
+        "review_info": {
             "so_committee_date": "",
             "so_committee_result": "",
             "law_committee_date": "",
             "law_committee_result": "",
             "plenary_vote_date": "",
             "plenary_vote_result": "",
-        }
+        },
+        "matched_images": matched_images
     })

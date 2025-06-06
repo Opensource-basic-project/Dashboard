@@ -91,6 +91,44 @@
           </tr>
         </table>
 
+      {% if matched_images %}
+      <h2 class="section-title">관련 통계 시각화</h2>
+      <div class="stat-wrapper">
+        <!-- 이미지 표시 영역 -->
+        <div class="stat-main">
+          <div id="image-title" class="stat-main-title">{{ matched_images[0].title }}</div>
+          <div class="image-box">
+            <img id="image-content" src="{{ matched_images[0].src }}" alt="{{ matched_images[0].title }}" />
+          </div>
+        </div>
+
+        <!-- 오른쪽 사이드 메뉴 -->
+        <div class="stat-sidebar">
+          <div class="stat-sidebar-list">
+            {% for item in matched_images %}
+              <div class="stat-sidebar-item" onclick="showImage({{ loop.index0 }})">
+                <div class="graph"></div>
+                <div class="graph-title">{{ item.title }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+      <script>
+        const images = {{ matched_images | tojson }};
+        function showImage(index) {
+          document.getElementById("image-title").innerText = images[index].title;
+          const img = document.getElementById("image-content");
+          img.src = images[index].src;
+          img.alt = images[index].title;
+        }
+      </script>
+      {% endif %}
+
+
+
 
       <p><a href="{{ link_url }}" target="_blank">국회 상세 페이지 바로가기</a></p>
     </div>
